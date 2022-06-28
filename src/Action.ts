@@ -28,7 +28,7 @@ export const fetchCastAction = (id: number) => ({
   type: CAST_FETCH,
   payload: id,
 });
-export const fetchedCastAction = (cast: any[]) => ({
+export const fetchedCastAction = (castId: number, cast: any[]) => ({
   type: CAST_FETCHED,
-  payload: cast,
+  payload: {cast, castId}
 });

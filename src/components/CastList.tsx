@@ -3,32 +3,33 @@ import { connect } from "react-redux";
 import { fetchCastAction } from "../Action";
 import { withRouter, WithRouterProps } from "../hoc/withRouter";
 import { Cast } from "../models/Cast";
-import { castEntitiesSelector } from "../selector";
+import { showCastSelector } from "../selector";
 import { State } from "../store";
 import CastRow from "./CastRow";
 
 type CastListProps = {
-  casts: Cast;
+  casts: Cast[];
   fetchCast: (id: number) => void;
 } & WithRouterProps;
 
 const CastList: FC<CastListProps> = ({ casts, fetchCast, params }) => {
-  // useEffect(() => {
-  //   fetchCast(+params.id);
-  // }, []);
+  useEffect(() => {
+    fetchCast(+params.id);
+  }, []);
   if (!casts) return <></>;
   return (
-    <div className=" flex flex-wrap space-y-2  ">
+    <div className=" w-1/2  flex flex-wrap">
       {casts.map((c) => (
-        <CastRow cast={c} />
+        <CastRow key={c.id} cast={c} />
       ))}
     </div>
   );
 };
 
 CastList.defaultProps = {};
-const mapStateToProps = (s: State) => ({
-  casts: castEntitiesSelector(s),
+
+const mapStateToProps = (s: State, props: any) => ({
+  casts: showCastSelector(s)[+props.params.id],
 });
 const mapDispatchToProps = {
   fetchCast: fetchCastAction,

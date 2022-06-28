@@ -36,7 +36,11 @@ const ShowList: FC<ShowListProps> = ({ loader, shows, fetchShow, query }) => {
           onChange={handelInputChange}
         />
       </div>
-      {loader && <Spinner />}
+      {loader && (
+        <div className=" pl-6">
+          <Spinner />
+        </div>
+      )}
       {
         <div className=" flex space-x-2 flex-wrap p-4 justify-center items-center">
           {shows.map((s) => (

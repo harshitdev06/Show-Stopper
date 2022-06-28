@@ -5,6 +5,7 @@ import { withRouter, WithRouterProps } from "../hoc/withRouter";
 import { Show } from "../models/Show";
 import { showEntitiesSelector, showLoadingSelector } from "../selector";
 import { State } from "../store";
+import CastList from "./CastList";
 import Spinner from "./Spinner";
 
 type ShowDetailProps = {
@@ -71,7 +72,9 @@ const ShowDetail: FC<ShowDetailProps> = ({
                 <h1 className="text-yellow-400 text-2xl font-bold">
                   Top Cast :{" "}
                 </h1>
-                <div></div>
+                <div className="pt-4">
+                  <CastList />
+                </div>
               </div>
             </div>
           </div>

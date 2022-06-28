@@ -1,21 +1,4 @@
-export type Cast = CastObj[]
-export type CastObj= {
-  person: Person;
-  character: Character;
-}
-
-export interface Character {
-  id: number;
-  url: string;
-  name: string;
-  image: {
-    medium: string;
-    original: string;
-  };
-}
-
-
-export type Person = {
+export type Cast = {
   id: number;
   url: string;
   name: string;

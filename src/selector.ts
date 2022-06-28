@@ -1,4 +1,5 @@
 import { createSelector } from "reselect";
+import { Cast } from "./models/Cast";
 import { State } from "./store";
 
 const showStateSelector = (s: State) => s.shows;
@@ -36,5 +37,21 @@ export const showLoadingSelector = createSelector(
 );
 export const castEntitiesSelector = createSelector(
   castStateSelector,
-  (castState) => castState.entities[0]
+  (castState) => castState.entities
+);
+export const castIdsSelector = createSelector(
+  showStateSelector,
+  (showState) => showState.castIds
+);
+export const showCastSelector = createSelector(
+  castEntitiesSelector,
+  castIdsSelector,
+  (castEntities, showCastIds) => {
+    const data = Object.keys(showCastIds).reduce((showCast, showId) => {
+      const castIds = showCastIds[+showId];
+      const cast = castIds.map((ci) => castEntities[ci]);
+      return { ...showCast, [showId]: cast };
+    }, {});
+    return data as { [id: number]: Cast[] };
+  }
 );

@@ -13,6 +13,8 @@ export const getShowDetail = async (id: number) => {
   return response.data;
 };
 export const getCast = async (id: number) => {
-  const reponse = await axios.get<Cast>(` https://api.tvmaze.com/shows/${id}/cast`);
+  const reponse = await axios.get<{ person: Cast }[]>(
+    ` https://api.tvmaze.com/shows/${id}/cast`
+  );
   return reponse.data;
 };

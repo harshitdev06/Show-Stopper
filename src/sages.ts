@@ -10,6 +10,7 @@ import {
   SHOW_DETAIL_FETCH,
 } from "./Action";
 import { getCast, getShow, getShowDetail } from "./api";
+import { Cast } from "./models/Cast";
 
 export const sagaMiddleWare = createSagaMiddleware();
 
@@ -26,9 +27,10 @@ export function* fetchShowDetail(action: AnyAction): Generator<any, any, any> {
   yield put(fetchedShowDetailAction(data));
 }
 export function* fetchCast(action: AnyAction): Generator<any, any, any> {
-  const id = action.payload;
+  const id = action.payload as number
   const data = yield call(getCast, id);
-  yield put(fetchedCastAction(data));
+  const cast = (data as { person: Cast }[]).map((d) => d.person);
+  yield put(fetchedCastAction(id, cast));
 }
 export function* rootSaga() {
   yield takeLatest(SHOWS_FETCH, fetchShowList);

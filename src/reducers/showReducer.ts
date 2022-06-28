@@ -1,11 +1,13 @@
 import { normalize, schema } from "normalizr";
 import { Reducer } from "redux";
 import {
+  CAST_FETCHED,
   SHOWS_FETCH,
   SHOWS_FETCHED,
   SHOW_DETAIL_FETCH,
   SHOW_DETAIL_FETCHED,
 } from "../Action";
+import { Cast } from "../models/Cast";
 import { Show } from "../models/Show";
 
 export type ShowState = {
@@ -16,6 +18,7 @@ export type ShowState = {
   showLoading: {
     [id: number]: boolean;
   };
+  castIds: { [id: number]: number[] };
 };
 
 export const intitialShowState: ShowState = {
@@ -24,6 +27,7 @@ export const intitialShowState: ShowState = {
   againstQuery: {},
   showsLoding: false,
   showLoading: {},
+  castIds: {},
 };
 
 export const showReducer: Reducer<ShowState> = (
@@ -31,6 +35,13 @@ export const showReducer: Reducer<ShowState> = (
   action
 ) => {
   switch (action.type) {
+    case CAST_FETCHED:
+      const { cast, castId } = action.payload as {
+        castId: number;
+        cast: Cast[];
+      };
+      const castIds = cast.map((c) => c.id);
+      return { ...state, castIds: { ...state.castIds, [castId]: castIds } };
     case SHOWS_FETCHED:
       const { query, show } = action.payload as { query: string; show: Show[] };
       const showEntities = new schema.Entity("shows");
