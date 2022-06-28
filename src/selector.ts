@@ -26,9 +26,13 @@ export const showListSelector = createSelector(
   showEntitiesSelector,
   (ids, entities) => ids.map((id) => entities[id])
 );
-export const showDetailSelector = createSelector(
+export const showsLoadingSelector = createSelector(
   showStateSelector,
-  (state) => state.detail
+  (showState) => showState.showsLoding
+);
+export const showLoadingSelector = createSelector(
+  showStateSelector,
+  (showState) => showState.showLoading
 );
 export const castEntitiesSelector = createSelector(
   castStateSelector,

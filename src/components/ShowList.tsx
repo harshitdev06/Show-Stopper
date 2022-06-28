@@ -1,29 +1,28 @@
-import {
-  ChangeEvent,
-  ChangeEventHandler,
-  FC,
-  memo,
-  useEffect,
-  useState,
-} from "react";
+import { ChangeEvent, FC, memo } from "react";
 import { connect } from "react-redux";
 import { fetchShowAction } from "../Action";
 import { Show } from "../models/Show";
-import { showListSelector, showQuerySelector } from "../selector";
+import {
+  showListSelector,
+  showsLoadingSelector,
+  showQuerySelector,
+} from "../selector";
 import { State } from "../store";
 import ShowRow from "./ShowRow";
+import Spinner from "./Spinner";
 
 type ShowListProps = {
   shows: Show[];
   fetchShow: (s: string) => void;
   query: string;
+  loader: boolean;
 };
 
-const ShowList: FC<ShowListProps> = ({ shows, fetchShow, query }) => {
-  const [loader, setLoader] = useState(true);
+const ShowList: FC<ShowListProps> = ({ loader, shows, fetchShow, query }) => {
   const handelInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     fetchShow(event.target.value);
   };
+
   return (
     <div className="flex flex-col">
       <div className="px-10 py-2 flex  items-center  justify-between space-x-2">
@@ -37,11 +36,11 @@ const ShowList: FC<ShowListProps> = ({ shows, fetchShow, query }) => {
           onChange={handelInputChange}
         />
       </div>
-
+      {loader && <Spinner />}
       {
         <div className=" flex space-x-2 flex-wrap p-4 justify-center items-center">
           {shows.map((s) => (
-            <ShowRow key={s.id} show={s} />
+            <ShowRow key={s?.id} show={s} />
           ))}
         </div>
       }
@@ -53,6 +52,7 @@ ShowList.defaultProps = {};
 const mapStateToProps = (s: State) => ({
   shows: showListSelector(s),
   query: showQuerySelector(s),
+  loader: showsLoadingSelector(s),
 });
 const mapDispatchToProps = {
   fetchShow: fetchShowAction,

@@ -1,20 +1,29 @@
 import { normalize, schema } from "normalizr";
 import { Reducer } from "redux";
-import { SHOWS_FETCH, SHOWS_FETCHED, SHOW_DETAIL_FETCHED } from "../Action";
+import {
+  SHOWS_FETCH,
+  SHOWS_FETCHED,
+  SHOW_DETAIL_FETCH,
+  SHOW_DETAIL_FETCHED,
+} from "../Action";
 import { Show } from "../models/Show";
 
 export type ShowState = {
   entities: { [id: number]: Show };
   againstQuery: { [q: string]: number[] };
   query: string;
-  detail: Show[];
+  showsLoding: boolean;
+  showLoading: {
+    [id: number]: boolean;
+  };
 };
 
 export const intitialShowState: ShowState = {
   query: "",
   entities: {},
   againstQuery: {},
-  detail: [],
+  showsLoding: false,
+  showLoading: {},
 };
 
 export const showReducer: Reducer<ShowState> = (
@@ -33,11 +42,23 @@ export const showReducer: Reducer<ShowState> = (
         ...state,
         entities: { ...state.entities, ...normalizedShows },
         againstQuery: { ...state.againstQuery, [query]: ids },
+        showsLoding: false,
       };
     case SHOWS_FETCH:
-      return { ...state, query: action.payload };
+      const showQuery = action.payload;
+      let loadder = showQuery ? true : false;
+      return { ...state, query: showQuery, showsLoding: loadder };
+
+    case SHOW_DETAIL_FETCH:
+      const id = action.payload;
+      return { ...state, showLoading: { ...state.showLoading, [id]: true } };
     case SHOW_DETAIL_FETCHED:
-      return { ...state, detail: [action.payload] };
+      const showObj: Show = action.payload;
+      return {
+        ...state,
+        entities: { ...state.entities, [showObj.id]: showObj },
+        showLoading: { ...state.showLoading, [showObj.id]: false },
+      };
     default:
       return state;
   }

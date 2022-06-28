@@ -13,9 +13,9 @@ type CastListProps = {
 } & WithRouterProps;
 
 const CastList: FC<CastListProps> = ({ casts, fetchCast, params }) => {
-  useEffect(() => {
-    fetchCast(+params.id);
-  }, []);
+  // useEffect(() => {
+  //   fetchCast(+params.id);
+  // }, []);
   if (!casts) return <></>;
   return (
     <div className=" flex flex-wrap space-y-2  ">

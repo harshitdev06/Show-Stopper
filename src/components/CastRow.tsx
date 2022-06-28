@@ -14,7 +14,10 @@ const CastRow: FC<CastRowProps> = ({ cast }) => {
       <div className="flex space-x-2 items-start w-56 ">
         <img
           className="object-cover object-top rounded-full shrink-0  h-24 w-24"
-          src={cast.person.image.medium}
+          src={
+            cast.person.image?.medium ||
+            "https://cdn3.vectorstock.com/i/thumb-large/63/42/avatar-photo-placeholder-icon-design-vector-30916342.jpg"
+          }
         />
 
         <div className="pt-3">
