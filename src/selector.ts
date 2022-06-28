@@ -55,3 +55,8 @@ export const showCastSelector = createSelector(
     return data as { [id: number]: Cast[] };
   }
 );
+
+export const actorDetailLoading = createSelector(
+  castStateSelector,
+  (castState) => castState.actorLoading
+);

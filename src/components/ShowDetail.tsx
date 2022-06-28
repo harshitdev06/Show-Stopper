@@ -23,6 +23,7 @@ const ShowDetail: FC<ShowDetailProps> = ({
   useEffect(() => {
     fetchedDetail(+params.id);
   }, []);
+  const summary = showDetail.summary;
   if (!showDetail) return <></>;
 
   return (
@@ -59,7 +60,7 @@ const ShowDetail: FC<ShowDetailProps> = ({
                 />
                 <div className="pl-5 space-y-2">
                   <p className="text-zinc-500 font-medium text-lg">
-                    {showDetail.summary}
+                    <div dangerouslySetInnerHTML={{ __html: summary }} />
                   </p>
                   <h1 className="space-x-2 text-gray-600 text-md ">
                     {showDetail?.genres.map((g) => <span> {g}</span>) ||

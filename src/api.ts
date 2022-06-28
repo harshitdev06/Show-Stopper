@@ -18,3 +18,7 @@ export const getCast = async (id: number) => {
   );
   return reponse.data;
 };
+export const getCastDetail = async (id: number) => {
+  const reponse = await axios.get<Cast>(`https://api.tvmaze.com/people/${id}`);
+  return reponse.data;
+};

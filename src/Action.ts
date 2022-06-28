@@ -1,3 +1,4 @@
+import { Cast } from "./models/Cast";
 import { Show } from "./models/Show";
 
 export const SHOWS_FETCH = "show fetch";
@@ -6,6 +7,18 @@ export const SHOW_DETAIL_FETCH = "show detail fetch";
 export const SHOW_DETAIL_FETCHED = "show detail fetched";
 export const CAST_FETCH = "cast fetch";
 export const CAST_FETCHED = "cast fetched";
+export const ACTOR_DETAIL_FETCH = "actor detail fetch";
+export const ACTOR_DETAIL_FETCHED = "actor detail fetched";
+
+export const fetchActorDetail = (actorId: number) => ({
+  type: ACTOR_DETAIL_FETCH,
+  payload: actorId,
+});
+
+export const fetchedActorDetail = (actor: Cast) => ({
+  type: ACTOR_DETAIL_FETCHED,
+  payload: actor,
+});
 
 export const fetchShowAction = (query: string) => ({
   type: SHOWS_FETCH,
@@ -30,5 +43,5 @@ export const fetchCastAction = (id: number) => ({
 });
 export const fetchedCastAction = (castId: number, cast: any[]) => ({
   type: CAST_FETCHED,
-  payload: {cast, castId}
+  payload: { cast, castId },
 });
