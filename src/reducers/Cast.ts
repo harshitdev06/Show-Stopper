@@ -1,5 +1,5 @@
 import { normalize, schema } from "normalizr";
-import { Reducer } from "redux";
+import { AnyAction, Reducer } from "redux";
 import {
   ACTOR_DETAIL_FETCH,
   ACTOR_DETAIL_FETCHED,
@@ -35,7 +35,6 @@ export const castReducer: Reducer<CastState> = (
       const castEntities = new schema.Entity("cast");
       const normalized = normalize(cast, [castEntities]);
       const normalizedCast = normalized.entities.cast;
-
       return {
         ...state.entities,
         entities: { ...state.entities, ...normalizedCast },

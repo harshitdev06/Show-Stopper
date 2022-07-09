@@ -23,9 +23,9 @@ const ShowDetail: FC<ShowDetailProps> = ({
   useEffect(() => {
     fetchedDetail(+params.id);
   }, []);
-  const summary = showDetail.summary;
-  if (!showDetail) return <></>;
 
+  if (!showDetail) return <></>;
+  const summary = showDetail.summary;
   return (
     <>
       {loadder && <Spinner />}

@@ -40,11 +40,11 @@ const ActorDetail: FC<ActorDetailProps> = ({
               }
             />
             <div className="pl-4">
-              <div className="text-4xl font-bold "> {actor.name}</div>
+              <div className="text-4xl font-bold "> {actor?.name}</div>
               <div className="flex space-x-2 items-center">
                 <span className="text-zinc-700 font-semibold">Born :</span>
                 <span className="ml-1 font-semibold text-zinc-700  text-lg">
-                  {DateTime.fromISO(actor.birthday.toString()).toFormat(
+                  {DateTime.fromISO(actor?.birthday?.toString()).toFormat(
                     ` LLL dd y`
                   )}
                 </span>
